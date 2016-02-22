@@ -11,7 +11,7 @@ namespace ScreenShotter
         [DllImport("user32.dll")]
         public static extern uint RegisterWindowMessage(string message);
 
-        static string appid = "a77a67-baa7a7a7-4123-9ff-67-6-7234ababab675-5374-777";
+        static string appGUid = "5490138e-9f44-49b0-a040-bda0903c201b";
         public static uint ao = RegisterWindowMessage("SS_ANOTHER_INSTANCE");
         /// <summary>
         /// Главная точка входа для приложения.
@@ -19,7 +19,7 @@ namespace ScreenShotter
         [STAThread]
         public static void Main()
         {
-            using (Mutex mutex = new Mutex(false, "Global\\" + appid))
+            using (Mutex mutex = new Mutex(false, "Global\\" + appGUid))
             {
                 if (!mutex.WaitOne(0, false))
                 {

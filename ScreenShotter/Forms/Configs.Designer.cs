@@ -83,9 +83,7 @@
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.button1.Location = new System.Drawing.Point(13, 134);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
@@ -97,9 +95,7 @@
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.button2.Location = new System.Drawing.Point(205, 134);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
@@ -146,9 +142,7 @@
             // dfltButton
             // 
             this.dfltButton.FlatAppearance.BorderSize = 0;
-            this.dfltButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dfltButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dfltButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dfltButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.dfltButton.Location = new System.Drawing.Point(110, 134);
             this.dfltButton.Name = "dfltButton";
             this.dfltButton.Size = new System.Drawing.Size(75, 23);
@@ -178,6 +172,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(292, 165);
             this.Controls.Add(this.jpgQualityBox);
             this.Controls.Add(this.jpgLabel);
@@ -190,6 +185,7 @@
             this.Controls.Add(this.TooltipCheckbox);
             this.Controls.Add(this.TTCheckbox);
             this.Controls.Add(this.consCheckbox);
+            this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = global::ScreenShotter.Properties.Resources.Configs;
             this.MaximizeBox = false;

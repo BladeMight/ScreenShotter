@@ -1,0 +1,4 @@
+/ScreenShotter/bin/*
+/ScreenShotter/obj/*
+/ScreenShotter/*.suo
+/ScreenShotter/*.user

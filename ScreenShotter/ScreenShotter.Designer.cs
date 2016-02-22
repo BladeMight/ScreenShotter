@@ -60,20 +60,19 @@
             this.SasLabel.Name = "SasLabel";
             this.SasLabel.Size = new System.Drawing.Size(290, 26);
             this.SasLabel.TabIndex = 1;
+            this.SasLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // spButton
             // 
+            this.spButton.BackColor = System.Drawing.Color.Transparent;
             this.spButton.FlatAppearance.BorderSize = 0;
-            this.spButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.spButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.spButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.spButton.ForeColor = System.Drawing.Color.Black;
+            this.spButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.spButton.Location = new System.Drawing.Point(158, 42);
             this.spButton.Name = "spButton";
             this.spButton.Size = new System.Drawing.Size(106, 23);
             this.spButton.TabIndex = 3;
             this.spButton.Text = "Select folder";
-            this.spButton.UseVisualStyleBackColor = true;
+            this.spButton.UseVisualStyleBackColor = false;
             this.spButton.Click += new System.EventHandler(this.spButton_Click);
             this.spButton.MouseHover += new System.EventHandler(this.spButton_MouseHover);
             // 
@@ -90,47 +89,44 @@
             // 
             // ttButton
             // 
+            this.ttButton.BackColor = System.Drawing.Color.Transparent;
             this.ttButton.FlatAppearance.BorderSize = 0;
-            this.ttButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.ttButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.ttButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ttButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.ttButton.Location = new System.Drawing.Point(25, 42);
             this.ttButton.Name = "ttButton";
             this.ttButton.Size = new System.Drawing.Size(128, 23);
             this.ttButton.TabIndex = 5;
             this.ttButton.Text = "Tray Icon";
-            this.ttButton.UseVisualStyleBackColor = true;
+            this.ttButton.UseVisualStyleBackColor = false;
             this.ttButton.Click += new System.EventHandler(this.ttButton_Click);
             this.ttButton.MouseHover += new System.EventHandler(this.ttButton_MouseHover);
             // 
             // consButton
             // 
+            this.consButton.BackColor = System.Drawing.Color.Transparent;
             this.consButton.FlatAppearance.BorderSize = 0;
-            this.consButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.consButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.consButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.consButton.Location = new System.Drawing.Point(267, 182);
             this.consButton.Name = "consButton";
             this.consButton.Size = new System.Drawing.Size(23, 24);
             this.consButton.TabIndex = 6;
             this.consButton.Text = ">";
-            this.consButton.UseVisualStyleBackColor = true;
+            this.consButton.UseVisualStyleBackColor = false;
             this.consButton.Click += new System.EventHandler(this.consButton_Click);
             this.consButton.MouseHover += new System.EventHandler(this.consButton_MouseHover);
             // 
             // confButton
             // 
-            this.confButton.BackColor = System.Drawing.SystemColors.Control;
+            this.confButton.BackColor = System.Drawing.Color.Transparent;
+            this.confButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.confButton.FlatAppearance.BorderSize = 0;
-            this.confButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.confButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.confButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.confButton.Font = new System.Drawing.Font("Webdings", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.confButton.Location = new System.Drawing.Point(267, 243);
             this.confButton.Name = "confButton";
             this.confButton.Size = new System.Drawing.Size(23, 24);
             this.confButton.TabIndex = 7;
             this.confButton.Text = "@";
+            this.confButton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.confButton.UseVisualStyleBackColor = false;
             this.confButton.Click += new System.EventHandler(this.confButton_Click);
             this.confButton.MouseHover += new System.EventHandler(this.confButton_MouseHover);
@@ -139,13 +135,11 @@
             // 
             this.lstButton.BackColor = System.Drawing.Color.Transparent;
             this.lstButton.FlatAppearance.BorderSize = 0;
-            this.lstButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lstButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.lstButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lstButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lstButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lstButton.Location = new System.Drawing.Point(159, 244);
+            this.lstButton.Location = new System.Drawing.Point(158, 244);
             this.lstButton.Name = "lstButton";
-            this.lstButton.Size = new System.Drawing.Size(105, 23);
+            this.lstButton.Size = new System.Drawing.Size(106, 23);
             this.lstButton.TabIndex = 8;
             this.lstButton.Text = "Open last Screenshot";
             this.lstButton.UseVisualStyleBackColor = false;
@@ -172,6 +166,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(292, 269);
             this.Controls.Add(this.Info);
             this.Controls.Add(this.lstButton);

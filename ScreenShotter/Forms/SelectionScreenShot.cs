@@ -73,7 +73,7 @@ namespace ScreenShotter
                 selection = new Rectangle(x, y, w, h);
                 ttSize.Show("W:" + w + " H:" + h, this, loc);
                 this.Refresh();
-                g.FillRectangle(Brushes.White, selection);
+                g.FillRectangle(Brushes.LightGray, selection);
             }
             if (e.Button == MouseButtons.None)
             {

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Media;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 namespace ScreenShotter
@@ -124,6 +125,9 @@ namespace ScreenShotter
         private void MainWindowShow()
         {
             Show();
+            TopMost = true;
+            Thread.Sleep(1);
+            TopMost = false;
             cwl("ScreenShotter Main Window Shown.");
             MemoryManagement.FlushMemory();
         }

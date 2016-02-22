@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsoleForm));
             this.ConsoleText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // ConsoleText
             // 
+            this.ConsoleText.BackColor = System.Drawing.SystemColors.Control;
             this.ConsoleText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ConsoleText.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ConsoleText.Location = new System.Drawing.Point(-3, -2);
@@ -48,10 +48,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(520, 269);
             this.Controls.Add(this.ConsoleText);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(Properties.Resources.ConsoleIcon));
+            this.Icon = global::ScreenShotter.Properties.Resources.ConsoleIcon;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ConsoleForm";
