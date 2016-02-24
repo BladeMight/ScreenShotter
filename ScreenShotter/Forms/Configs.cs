@@ -95,6 +95,22 @@ namespace ScreenShotter
             ScreenShotter.langchange();
             ScreenShotter.check.Start();
         }
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            Cancell();
+        }
+        public void Cancell()
+        {
+            if (wasit != language)
+            {
+                ScreenShotter.cc_lang = backupl;
+                language = wasit;
+                ScreenShotter.langchange();
+                ScreenShotter.check.Start();
+            }
+            onopen = true;
+            ScreenShotter.console.Write(ScreenShotter.cc_lang[7] + " " + ScreenShotter.cc_lang[25]);
+        }
         public void InstantLangChange()
         {
             if (language == "ru")
@@ -172,15 +188,10 @@ namespace ScreenShotter
 
         private void Configs_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (wasit != language)
+            if (e.CloseReason == CloseReason.UserClosing)
             {
-                ScreenShotter.cc_lang = backupl;
-                language = wasit;
-                ScreenShotter.langchange();
-                ScreenShotter.check.Start();
+                Cancell();
             }
-            onopen = true;
-            ScreenShotter.console.Write(ScreenShotter.cc_lang[7]+" "+ScreenShotter.cc_lang[25]);
         }
         #region Tooltips
         private void XCheckbox_MouseHover(object sender, EventArgs e)
