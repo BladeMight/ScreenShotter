@@ -27,7 +27,7 @@ namespace Classes
 /*47-49*/    "Click here to show/hide Tray Icon.","Click here to select Path where to save Screenshots.","Click here to open last Screenshot.",
 /*50-52*/    "Click here to show/hide Console.","Click here to open configs window.","Here shown current path for saving screenshots.\nPath:",
              // this is tooltips of the configs window
-/*53*/       "While this enabled closing Main Window will not end program\nto close program hit \"Exit\" in Tray Menu or CTRL + WIN + ALT + F4",
+/*53*/       "While this disabled closing Main Window will not end program\nto close program hit \"Exit\" in Tray Menu or CTRL + WIN + ALT + F4",
 /*54-55*/    "Displays tooltips like this one in main window, when hovering something.", "If this checked \"show/hide tray button\" will be visible in main window.",
 /*56-58*/    "Enabling this will show the \"console show/hide button\" in main window.","Select screenshots saving format.","This is language select panel.",
              // this is tray menu and About window
@@ -55,7 +55,7 @@ namespace Classes
              // Это подсказки окна настроек
 /*53*/       "Пока это включено закрытие главного окна не завершит программу\nчтобы завершить програму нажмите \"Выход\" в меню трей иконки или CTRL + WIN + ALT + F4",
 /*54-55*/    "Отображает подсказки как эта, в главном окне, когда наводите на что-то.", "Если включено то \"кнопка показа/скрытия трей иконки\" будет видна в главном окне.",
-/*56-58*/    "Если включено то \"кнопка показа/скрытия консоли иконки\" будет видна в главном окне.","Выберите формат сохранения скриншотов.","Это панель выбора языка.",
+/*56-58*/    "Если выключено то \"кнопка показа/скрытия консоли иконки\" будет видна в главном окне.","Выберите формат сохранения скриншотов.","Это панель выбора языка.",
              // Это меню в трее и окно О программе
 /*59-64*/    "Настройки","Показать/Скрыть","О...","Выход","Версия","С помощью этой программы можно делать снимки экрана(скриншоты).", "Для большей информации наведите мышь на \"?\" в главном окне."
                                     };
