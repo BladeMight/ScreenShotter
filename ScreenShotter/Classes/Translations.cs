@@ -31,7 +31,9 @@ namespace Classes
 /*54-55*/    "Displays tooltips like this one in main window, when hovering something.", "If this checked \"show/hide tray button\" will be visible in main window.",
 /*56-58*/    "Enabling this will show the \"console show/hide button\" in main window.","Select screenshots saving format.","This is language select panel.",
              // this is tray menu and About window
-/*59-64*/    "Configs","Show/Hide","About","Exit","Version","With this program you can do screenshots.","For more info hover the \"?\" in main window."
+/*59-64*/    "Configs","Show/Hide","About","Exit","Version","With this program you can do screenshots.","For more info hover the \"?\" in main window.",
+             // this is message box in configs
+/*65-67*/    "I must be a number!\nNumber must be from 0 to 100","Error!"
                                          };
         static public string[] lang_ru = {
              // Это консоли, сообщений и элементов главного окна
@@ -57,7 +59,9 @@ namespace Classes
 /*54-55*/    "Отображает подсказки как эта, в главном окне, когда наводите на что-то.", "Если включено то \"кнопка показа/скрытия трей иконки\" будет видна в главном окне.",
 /*56-58*/    "Если включено то \"кнопка показа/скрытия консоли иконки\" будет видна в главном окне.","Выберите формат сохранения скриншотов.","Это панель выбора языка.",
              // Это меню в трее и окно О программе
-/*59-64*/    "Настройки","Показать/Скрыть","О...","Выход","Версия","С помощью этой программы можно делать снимки экрана(скриншоты).", "Для большей информации наведите мышь на \"?\" в главном окне."
+/*59-64*/    "Настройки","Показать/Скрыть","О...","Выход","Версия","С помощью этой программы можно делать снимки экрана(скриншоты).", "Для большей информации наведите мышь на \"?\" в главном окне.",
+             // this is message box in configs
+/*65-66*/    "Это должно быть число!\nЧисло должно быть от 0 до 100","Ошибка!"
                                     };
        
     }

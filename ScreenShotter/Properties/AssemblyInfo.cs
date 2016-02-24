@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BladeMight")]
 [assembly: AssemblyProduct("ScreenShootter")]
-[assembly: AssemblyCopyright("Copyright © BladeMight 2016")]
+[assembly: AssemblyCopyright("© 2016 BladeMight")]
 [assembly: AssemblyTrademark("BM")]
 [assembly: AssemblyCulture("")]
 
@@ -33,6 +33,6 @@ using System.Resources;
 // Можно задать все значения или принять номер построения и номер редакции по умолчанию, 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.7.5.1")]
-[assembly: AssemblyFileVersion("0.7.5.1")]
+[assembly: AssemblyVersion("0.7.5.4")]
+[assembly: AssemblyFileVersion("0.7.5.4")]
 [assembly: NeutralResourcesLanguageAttribute("")]

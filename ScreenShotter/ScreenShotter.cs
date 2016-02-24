@@ -30,6 +30,10 @@ namespace ScreenShotter
         #endregion
         public ScreenShotter()
         {
+            if (mus.lang == "")
+            {
+                mus.lang = "en";
+            }
             check.Tick += new EventHandler(checkis);
             check.Interval = 50;
             check.Start();
@@ -509,6 +513,10 @@ namespace ScreenShotter
                     e.Cancel = true;
                     HideTogether();
                 }
+            }
+            if (About.Visible == true)
+            {
+                About.Visible = false;
             }
         }
         private void ScreenShotter_Activated(object sender, EventArgs e)

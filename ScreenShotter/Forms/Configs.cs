@@ -67,7 +67,7 @@ namespace ScreenShotter
                 if (!long.TryParse(jpgQualityBox.Text, out jpgq) || jpgq > 100 || jpgq < 0)
                 {
                     clear = true;
-                    MessageBox.Show("I must be a number!\nNumber must be from 0 to 100", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(ScreenShotter.cc_lang[65], ScreenShotter.cc_lang[66], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     jpgQualityBox.Text = "";
                 }
                 clear = false;
@@ -156,6 +156,7 @@ namespace ScreenShotter
                 langLabel.Size = new Size(55, 15);
                 langLabel.TextAlign = ContentAlignment.TopRight;
             }
+            language = ScreenShotter.mus.lang;
             wasit = ScreenShotter.mus.lang;
             backupl = ScreenShotter.cc_lang;
             TooltipCheckbox.Checked = ScreenShotter.mus.Tooltips;
