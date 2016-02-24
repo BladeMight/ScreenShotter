@@ -137,9 +137,9 @@
             this.lstButton.FlatAppearance.BorderSize = 0;
             this.lstButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lstButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lstButton.Location = new System.Drawing.Point(158, 244);
+            this.lstButton.Location = new System.Drawing.Point(104, 244);
             this.lstButton.Name = "lstButton";
-            this.lstButton.Size = new System.Drawing.Size(106, 23);
+            this.lstButton.Size = new System.Drawing.Size(160, 23);
             this.lstButton.TabIndex = 8;
             this.lstButton.Text = "Open last Screenshot";
             this.lstButton.UseVisualStyleBackColor = false;
@@ -199,7 +199,7 @@
         private System.Windows.Forms.Label SasLabel;
         private System.Windows.Forms.Button spButton;
         private System.Windows.Forms.Label pathLabel;
-        private System.Windows.Forms.Button ttButton;
+        public System.Windows.Forms.Button ttButton;
         private System.Windows.Forms.Button consButton;
         private System.Windows.Forms.Button confButton;
         private System.Windows.Forms.Button lstButton;

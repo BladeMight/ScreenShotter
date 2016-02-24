@@ -2,12 +2,14 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-
+using Classes;
 namespace ScreenShotter
 {
     public partial class Configs : Form
     {
-        private bool cb, tb, toob, xb;
+        private bool cb, tb, toob, xb, onopen = true;
+        private string language, wasit;
+        private string[] backupl;
         private ImageFormat format;
         private long jpgq;
         public Configs()
@@ -77,7 +79,9 @@ namespace ScreenShotter
             TTCheckbox.Checked = true;
             TooltipCheckbox.Checked = true;
             XCheckbox.Checked = true;
+            jpgQualityBox.Text = 90.ToString();
             comboBox1.SelectedIndex = 1;
+            comboBox2.SelectedIndex = 0;
         }
         public void Apply()
         {
@@ -87,10 +91,57 @@ namespace ScreenShotter
             ScreenShotter.mus.ExitOnX = xb;
             ScreenShotter.mus.siFormat = format;
             ScreenShotter.mus.jpgQuality = jpgq;
-
+            ScreenShotter.mus.lang = language;
+            ScreenShotter.langchange();
+            ScreenShotter.check.Start();
         }
-        private void Configs_Load(object sender, EventArgs e)
+        public void InstantLangChange()
         {
+            if (language == "ru")
+            {
+                langLabel.Location = new Point(225, 62);
+                langLabel.Size = new Size(66, 17);
+                langLabel.TextAlign = ContentAlignment.MiddleCenter;
+                ScreenShotter.cc_lang = Translations.lang_ru;
+                ScreenShotter.console.Write(ScreenShotter.cc_lang[44] + "\"Русский\"");
+            }
+            if (language == "en")
+            {
+                langLabel.Location = new Point(168, 85);
+                langLabel.Size = new Size(55, 15);
+                langLabel.TextAlign = ContentAlignment.TopRight;
+                ScreenShotter.cc_lang = Translations.lang_en;
+                ScreenShotter.console.Write(ScreenShotter.cc_lang[44] + "\"English\"");
+            }
+            this.Text = ScreenShotter.cc_lang[4];
+            consCheckbox.Text = ScreenShotter.cc_lang[34];
+            TTCheckbox.Text = ScreenShotter.cc_lang[35];
+            TooltipCheckbox.Text = ScreenShotter.cc_lang[36];
+            XCheckbox.Text = ScreenShotter.cc_lang[37];
+            langLabel.Text = ScreenShotter.cc_lang[38];
+            jpgLabel.Text = ScreenShotter.cc_lang[39];
+            sfLabel.Text = ScreenShotter.cc_lang[40];
+            cancelButton.Text = ScreenShotter.cc_lang[41];
+            dfltButton.Text = ScreenShotter.cc_lang[42];
+        }
+        private void Configs_VisibleChanged(object sender, EventArgs e)
+        {
+            if (ScreenShotter.mus.lang == "ru")
+            {
+                comboBox2.SelectedIndex = 1;
+                langLabel.Location = new Point(225, 62);
+                langLabel.Size = new Size(66, 17);
+                langLabel.TextAlign = ContentAlignment.MiddleCenter;
+            }
+            if (ScreenShotter.mus.lang == "en")
+            {
+                comboBox2.SelectedIndex = 0;
+                langLabel.Location = new Point(168, 85);
+                langLabel.Size = new Size(55, 15);
+                langLabel.TextAlign = ContentAlignment.TopRight;
+            }
+            wasit = ScreenShotter.mus.lang;
+            backupl = ScreenShotter.cc_lang;
             TooltipCheckbox.Checked = ScreenShotter.mus.Tooltips;
             TTCheckbox.Checked = ScreenShotter.mus.TrayButton;
             consCheckbox.Checked = ScreenShotter.mus.ConsoleButton;
@@ -116,37 +167,67 @@ namespace ScreenShotter
                 comboBox1.SelectedIndex = 3;
             }
             jpgQualityBox.Text = Convert.ToString(ScreenShotter.mus.jpgQuality);
+            onopen = false;
         }
 
         private void Configs_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ScreenShotter.console.Write("Configs Window Closed.");
+            if (wasit != language)
+            {
+                ScreenShotter.cc_lang = backupl;
+                language = wasit;
+                ScreenShotter.langchange();
+                ScreenShotter.check.Start();
+            }
+            onopen = true;
+            ScreenShotter.console.Write(ScreenShotter.cc_lang[7]+" "+ScreenShotter.cc_lang[25]);
         }
         #region Tooltips
         private void XCheckbox_MouseHover(object sender, EventArgs e)
         {
-            toolTip.Show("While this enabled Main window closing Main Window will not end program\nto close program hit \"Exit\" in Tray Menu or CTRL + WIN + ALT + F4", XCheckbox);
+            toolTip.Show(ScreenShotter.cc_lang[53], XCheckbox);
         }
 
         private void TooltipCheckbox_MouseHover(object sender, EventArgs e)
         {
-            toolTip.Show("Displays tooltips like this one in main form, when hovering something.", TooltipCheckbox);
+            toolTip.Show(ScreenShotter.cc_lang[54], TooltipCheckbox);
         }
 
         private void TTCheckbox_MouseHover(object sender, EventArgs e)
         {
-            toolTip.Show("If this checked toogle tray button will be visible in main form.", TTCheckbox);
+            toolTip.Show(ScreenShotter.cc_lang[55], TTCheckbox);
         }
 
         private void consCheckbox_MouseHover(object sender, EventArgs e)
         {
-            toolTip.Show("Enabling this will show the console button in main form.", consCheckbox);
+            toolTip.Show(ScreenShotter.cc_lang[56], consCheckbox);
         }
 
         private void label1_MouseHover(object sender, EventArgs e)
         {
-            toolTip.Show("Select in which format, screenshots will be saved.", label1);
+            toolTip.Show(ScreenShotter.cc_lang[57], sfLabel);
+        }
+        private void comboBox2_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.Show(ScreenShotter.cc_lang[58], comboBox2);
         }
         #endregion
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!onopen)
+            {
+                if (comboBox2.Text == "Русский")
+                {
+                    language = "ru";
+                }
+                else
+                {
+                    language = "en";
+                }
+            }
+            InstantLangChange();
+            ScreenShotter.check.Start();
+        }
     }
 }

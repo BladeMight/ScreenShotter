@@ -77,5 +77,12 @@ public class Settings : ApplicationSettingsBase
         get { return (bool)this["ExitOnX"]; }
         set { this["ExitOnX"] = (bool)value; }
     }
-
+    [UserScopedSetting()]
+    [global::System.Configuration.SettingsProviderAttribute(typeof(PortableSettingsProvider))]
+    [DefaultSettingValue("en")]
+    public string lang
+    {
+        get { return (string)this["lang"]; }
+        set { this["lang"] = (string)value; }
+    }
 }

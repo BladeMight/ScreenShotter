@@ -90,7 +90,7 @@ namespace ScreenShotter
                 g.CopyFromScreen(new Point(selection.Left, selection.Top), Point.Empty, selection.Size);
                 g.Dispose();
             }
-            else MessageBox.Show("Too small selection", "Caution!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            else MessageBox.Show(ScreenShotter.cc_lang[43], ScreenShotter.cc_lang[30], MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
     }
 }

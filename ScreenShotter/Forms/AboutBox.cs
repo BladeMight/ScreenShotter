@@ -9,14 +9,17 @@ namespace ScreenShotter
         public AboutBox()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+            RefreshAll();
+        }
+        public void RefreshAll()
+        {
+            this.Text = String.Format(ScreenShotter.cc_lang[61] + " " + AssemblyTitle);
+            this.labelProductName.Text = String.Format(AssemblyTitle);
+            this.labelVersion.Text = String.Format(ScreenShotter.cc_lang[63] + " " + AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            this.textBoxDescription.Text = String.Format(ScreenShotter.cc_lang[64] + Environment.NewLine + ScreenShotter.cc_lang[65]);
         }
-
         #region Методы доступа к атрибутам сборки
 
         public string AssemblyTitle

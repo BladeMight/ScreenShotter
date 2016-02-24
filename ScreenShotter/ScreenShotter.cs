@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using Classes;
 namespace ScreenShotter
 {
     public partial class ScreenShotter : Form
@@ -21,13 +22,19 @@ namespace ScreenShotter
         private Configs configs = new Configs();
         public static ConsoleForm console = new ConsoleForm();
         private SelectionScreenShot selSCR = new SelectionScreenShot();
-        private AboutBox About = new AboutBox();
+        private AboutBox About;
+        public static string[] cc_lang;
+        public static System.Windows.Forms.Timer check = new System.Windows.Forms.Timer();
         TrayIcon icon;
         SoundPlayer sound = new SoundPlayer(Properties.Resources.sound);
         #endregion
         public ScreenShotter()
         {
-            cwl("Program started.");
+            check.Tick += new EventHandler(checkis);
+            check.Interval = 50;
+            check.Start();
+            langchange();
+            cwl(cc_lang[9]);
             AddOwnedForm(configs);
             AddOwnedForm(console);
             AddOwnedForm(selSCR);
@@ -46,9 +53,50 @@ namespace ScreenShotter
             curWindowSS.Register();
             SelScrShot.Register();
             InitializeTrayIcon();
+            About = new AboutBox();
             MemoryManagement.FlushMemory();
         }
         #region Functions
+        public static void langchange()
+        {
+            if (mus.lang == "en")
+            {
+                cc_lang = Translations.lang_en;
+            }
+            if (mus.lang == "ru")
+            {
+                cc_lang = Translations.lang_ru;
+            }
+            else
+            {
+                cc_lang = Translations.lang_en;
+            }
+        }
+        void checkis(object sender, EventArgs e)
+        {
+            if (ScreenShotter.mus.TrayShow == true)
+            {
+                ttButton.Text = ScreenShotter.cc_lang[8] + " " + ScreenShotter.cc_lang[0];
+            }
+            else
+            {
+                ttButton.Text = ScreenShotter.cc_lang[8] + " " + ScreenShotter.cc_lang[1];
+            }
+            spButton.Text = cc_lang[31];
+            lstButton.Text = cc_lang[32];
+            if (mus.path != "")
+            {
+                pathLabel.Text = cc_lang[17] + ":" + Environment.NewLine + mus.path;
+            }
+            else
+            {
+                pathLabel.Text = cc_lang[17] + ":" + Environment.NewLine + cc_lang[33];
+            }
+            console.Text = cc_lang[45];
+            icon.RefreshMenu();
+            About.RefreshAll();
+            check.Stop();
+        }
         void InitializeTrayIcon()
         {
             icon = new TrayIcon(mus.TrayShow);
@@ -57,16 +105,16 @@ namespace ScreenShotter
             icon.DoubleClick += icon_DoubleClick;
             icon.AboutClick += icon_AboutClick;
             icon.ConfigsClick += confButton_Click;
-            cwl("Tray Icon Initialized.");
+            cwl( cc_lang[8] +" " + cc_lang[10]);
         }
         public void cwl(string log)
         {
-            console.Write(log);
+            console.Write(log+".");
         }
         private void ApplySave()
         {
             mus.Save();
-            cwl("Settings saved.");
+            cwl(cc_lang[4] + " " + cc_lang[2]);
             MemoryManagement.FlushMemory();
         }
         private void TooltipShow(string text, IWin32Window window)
@@ -113,13 +161,13 @@ namespace ScreenShotter
         private void SSConsoleHide()
         {
             console.Hide();
-            cwl("Console Hidden.");
+            cwl(cc_lang[5] + " " + cc_lang[1]);
             MemoryManagement.FlushMemory();
         }
         private void SSConsoleShow()
         {
             console.Show();
-            cwl("Console Shown.");
+            cwl(cc_lang[5] + " " + cc_lang[0]);
             MemoryManagement.FlushMemory();
         }
         private void MainWindowShow()
@@ -128,20 +176,20 @@ namespace ScreenShotter
             TopMost = true;
             Thread.Sleep(1);
             TopMost = false;
-            cwl("ScreenShotter Main Window Shown.");
+            cwl(cc_lang[6] + " " + cc_lang[0]);
             MemoryManagement.FlushMemory();
         }
         private void MainWindowHide()
         {
             Hide();
-            cwl("SreenShotter Main Window Hidden.");
+            cwl(cc_lang[6] + " " + cc_lang[1]);
             MemoryManagement.FlushMemory();
         }
         private void checkFileExist()
         {
             if (!File.Exists(@mus.LastPath) && mus.LastPath !="")
             {
-                cwl("Last Screenshot(" + mus.LastPath + ") not exist.");
+                cwl(cc_lang[11] +"(" + mus.LastPath + ")" + cc_lang[12]);
                 pictureBox1.Image = null;
                 lstButton.Visible = false;
                 SasLabel.Text = "";
@@ -175,23 +223,23 @@ namespace ScreenShotter
         {
             Graphics SS = Graphics.FromImage(ScSh as Image);
             SS.CopyFromScreen(0, 0, 0, 0, ScSh.Size);
-            cwl("Screenshot taken.");
-            cwl("Playing sound.");
+            cwl(cc_lang[13]);
+            cwl(cc_lang[14]);
             sound.Play();
             DateTime now = DateTime.Now;
             string name = now.ToString("yyyy-MM-dd,hh-mm-ss");
             string dateString = string.Format(@"{0}{1}", mus.path, name + "." + GETextension());
-            cwl("Name for Screenshot created, name = " + name );
-            SasLabel.Text = "Last Screenshot Saved as:" + Environment.NewLine + dateString;
+            cwl(cc_lang[20] + name);
+            SasLabel.Text = cc_lang[21] +":" + Environment.NewLine + dateString;
             saveImage(dateString, ScSh, mus.siFormat, mus.jpgQuality);
             pictureBox1.Image = ScSh;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            cwl("Screenshot saved as " + dateString);
-            cwl("Saving path to last path");
+            cwl(cc_lang[11] + cc_lang[21] + " " + dateString);
+            cwl(cc_lang[16]);
             mus.LastPath = dateString;
             if (lstButton.Visible == false)
             {
-                cwl("Showing lstButton");
+                cwl(cc_lang[22]);
                 lstButton.Visible = true;
             }
             SS.Dispose();
@@ -214,21 +262,23 @@ namespace ScreenShotter
                 if (cancelled == false)
                 {
                     ScSh = selSCR.selImage;
-                    cwl("Screenshot taken.");
-                    cwl("Playing sound.");
+                    cwl(cc_lang[13]);
+                    cwl(cc_lang[14]);
                     sound.Play();
                     DateTime now = DateTime.Now;
                     string name = now.ToString("yyyy-MM-dd,hh-mm-ss") + "-Selection";
                     string dateString = string.Format(@"{0}{1}", mus.path, name + "." + GETextension());
-                    cwl("Name for Screenshot created, name = " + name);
+                    cwl(cc_lang[20] + name);
                     SasLabel.Text = "Last Screenshot Saved as:" + Environment.NewLine + dateString;
                     saveImage(dateString,ScSh,mus.siFormat,mus.jpgQuality);
                     pictureBox1.Image = ScSh;
                     pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                    cwl(cc_lang[11] + cc_lang[21] + " " + dateString);
+                    cwl(cc_lang[16]);
                     mus.LastPath = dateString;
                     if (lstButton.Visible == false)
                     {
-                        cwl("Showing lstButton");
+                        cwl(cc_lang[22]);
                         lstButton.Visible = true;
                     }
                 }
@@ -240,28 +290,30 @@ namespace ScreenShotter
         private void curWindSSHandler()
         {
             ScSh = CurrentWindowScreenShot.CaptureCurrentWindow();
-            cwl("Screenshot taken.");
-            cwl("Playing sound.");
+            cwl(cc_lang[13]);
+            cwl(cc_lang[14]);
             sound.Play();
             DateTime now = DateTime.Now;
             string name = now.ToString("yyyy-MM-dd,hh-mm-ss") + "-Window";
             string dateString = string.Format(@"{0}{1}", mus.path, name + "." + GETextension());
-            cwl("Name for Screenshot created, name = " + name);
+            cwl(cc_lang[20] + name);
             SasLabel.Text = "Last Screenshot Saved as:" + Environment.NewLine + dateString;
             saveImage(dateString, ScSh, mus.siFormat, mus.jpgQuality);
             pictureBox1.Image = ScSh;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            cwl(cc_lang[11] + cc_lang[21] + " " + dateString);
+            cwl(cc_lang[16]);
             mus.LastPath = dateString;
             if (lstButton.Visible == false)
             {
-                cwl("Showing lstButton");
+                cwl(cc_lang[22]);
                 lstButton.Visible = true;
             }
             MemoryManagement.FlushMemory();
         }
         protected override void WndProc(ref Message m)
         {
-            string HotkeyCatchLog ="Hotkey catched with m.LParam of Key = " + (((int)m.LParam >> 16) & 0xFFFF) + " and m.LParam of Modifier = " + ((int)m.LParam & 0xFFFF);
+            string HotkeyCatchLog = cc_lang[26] + (((int)m.LParam >> 16) & 0xFFFF) + cc_lang[27] + ((int)m.LParam & 0xFFFF);
             if (m.Msg == Modifiers.WM_HOTKEY_MSG_ID)
                 if ((Keys)(((int)m.LParam >> 16) & 0xFFFF) == Keys.F3 && ((int)m.LParam & 0xFFFF) == Modifiers.ALT)
                 {
@@ -287,8 +339,8 @@ namespace ScreenShotter
                     }
                     else 
                     {
-                        MessageBox.Show("Last Screenshot not exist!", "Caution!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        cwl("Last Screenshot(" + mus.LastPath + ") not exist.");                        
+                        MessageBox.Show(cc_lang[11]+"("+mus.LastPath+")"+cc_lang[12], cc_lang[30], MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        cwl(cc_lang[11] + "(" + mus.LastPath + ")" + cc_lang[12]);                  
                         pictureBox1.Image = null;
                         lstButton.Visible = false;
                         SasLabel.Text = "";
@@ -308,10 +360,10 @@ namespace ScreenShotter
                 }
             if (m.Msg == Program.ao)
             {
-                cwl("Detected another instance of ScreenShotter is being opened, it was closed.");
+                cwl(cc_lang[28]);
                 if (Visible == true)
                 {
-                    cwl("ScreenShotter Main Window is visible, getting it to top.");
+                    cwl(cc_lang[29]);
                     this.Activate();
                 }
                 else
@@ -330,12 +382,12 @@ namespace ScreenShotter
             if (result == DialogResult.OK)
             {
                 mus.path = Selpath.SelectedPath + "\\";
-                cwl("Path set, path = " + mus.path);
+                cwl(cc_lang[15] + mus.path);
                 ApplySave();
-                pathLabel.Text = "Current path: " + Environment.NewLine + mus.path;
-                cwl("Writing current path to pathLabel.");
+                pathLabel.Text = cc_lang[17]+": " + Environment.NewLine + mus.path;
+                cwl(cc_lang[18]);
             }
-            else { cwl("Path Selection Dialog was closed or cancelled."); }
+            else { cwl(cc_lang[19]); }
             MemoryManagement.FlushMemory();
         }
         private void ttButton_Click(object sender, EventArgs e)
@@ -345,11 +397,11 @@ namespace ScreenShotter
                 mus.TrayShow = false;
                 icon.Hide();
                 Refresh();
-                cwl("Tray Icon Hidden.");
-                ttButton.Text = "Tray Icon Hidden";
+                cwl(cc_lang[8] + " " + cc_lang[1]);
+                ttButton.Text = cc_lang[8] + " " + cc_lang[1];
                 ApplySave();
             }
-            else { mus.TrayShow = true; icon.Show(); Refresh(); cwl("Tray Icon Shown."); ApplySave(); ttButton.Text = "Tray Icon Visible"; }
+            else { mus.TrayShow = true; icon.Show(); Refresh(); cwl(cc_lang[8] + " " + cc_lang[0]); ApplySave(); ttButton.Text = cc_lang[8] + " " + cc_lang[0]; }
         }
         private void consButton_Click(object sender, EventArgs e)
         {
@@ -371,16 +423,16 @@ namespace ScreenShotter
         {
             if (configs.Visible == false)
             {
-                cwl("Configs Window Shown.");
+                cwl( cc_lang[7] +" "+  cc_lang[0]);
                 if (configs.ShowDialog() == DialogResult.OK)
                 {
                     configs.Apply();
-                    cwl("Settings Applyed, Tooltips=" + mus.Tooltips + ", ConsoleButton=" + mus.ConsoleButton + ", TrayToogleButton=" + mus.TrayButton + ", Exit on Close =" + mus.ExitOnX + ", Format=" + Convert.ToString(mus.siFormat) + ".");
+                    cwl(cc_lang[4] + " " + cc_lang[2]+", Tooltips=" + mus.Tooltips + ", ConsoleButton=" + mus.ConsoleButton + ", TrayToogleButton=" + mus.TrayButton + ", Exit on Close =" + mus.ExitOnX + ", Format=" + Convert.ToString(mus.siFormat) + ", Language = " + mus.lang);
                     ReferenceVisibility();
                 }
-                else { cwl("Setting not Applyed"); }
+                else { cwl( cc_lang[4] + " " +  cc_lang[3]); }
             }
-            else { configs.Activate(); cwl("Configs window alredy opened!"); }
+            else { configs.Activate(); cwl(cc_lang[24]); }
             MemoryManagement.FlushMemory();
         }
         private void lstButton_Click(object sender, EventArgs e)
@@ -412,18 +464,18 @@ namespace ScreenShotter
         {
             if (mus.path != "")
             {
-                pathLabel.Text = "Current path:" + Environment.NewLine + mus.path;
+                pathLabel.Text = cc_lang[17] + ":" + Environment.NewLine + mus.path;
             }
             else
             {
-                pathLabel.Text = "Current path:" + Environment.NewLine + "Root folder of the program";
+                pathLabel.Text = cc_lang[17] + ":" + Environment.NewLine + cc_lang[33];
             }
-            cwl("Writing current path to pathLabel.");
+            cwl( cc_lang[18]);
             if (mus.TrayShow == true)
             {
-                ttButton.Text = "Tray Icon Visible";
+                ttButton.Text = cc_lang[8] + " " + cc_lang[0];
             }
-            else { ttButton.Text = "Tray Icon Hidden"; }
+            else { ttButton.Text = cc_lang[8] + " " + cc_lang[1]; }
             if (mus.LastPath == "")
             {
                 lstButton.Visible = false;
@@ -432,11 +484,11 @@ namespace ScreenShotter
             {
                 if (File.Exists(mus.LastPath))
                 {
-                    SasLabel.Text = "Last Screenshot Saved as:" + Environment.NewLine + mus.LastPath;
+                    SasLabel.Text = cc_lang[11] + cc_lang[21] + ":" + Environment.NewLine + mus.LastPath;
                     pictureBox1.Image = Image.FromFile(@mus.LastPath);
                     pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                 }
-                else { lstButton.Visible = false; cwl("Last Screenshot(" + mus.LastPath + ") not exist."); }
+                else { lstButton.Visible = false; cwl(cc_lang[11] + "(" + mus.LastPath + ")" + cc_lang[12]); }
             }
             ReferenceVisibility();
             }
@@ -473,43 +525,50 @@ namespace ScreenShotter
         #region Tooltips
         private void Info_MouseHover(object sender, EventArgs e)
         {
-            TooltipShow("ALT + F3 to make a Screenshot\nCTRL + F3 to make Screenshot of active window\nCTRL + SHIFT + F3 to make Selection Screenshot(ESC or ALT+F4 to cancel)\nALT + CTRL + F3 to Show/Hide Main Window\nALT + SHIFT + F3 to open last Screenshot\nALT + WIN + CTRL + F4 to immediately Shutdown.", Info);
+            TooltipShow(cc_lang[46], Info);
             MemoryManagement.FlushMemory();
         }
 
         private void ttButton_MouseHover(object sender, EventArgs e)
         {
-            TooltipShow("Click here to Toogle Tray Icon Visibility.", ttButton);
+            TooltipShow(cc_lang[47], ttButton);
             MemoryManagement.FlushMemory();
         }
 
         private void spButton_MouseHover(object sender, EventArgs e)
         {
-            TooltipShow("Click here to Select Path where to save Screenshots.", spButton);
+            TooltipShow(cc_lang[48], spButton);
             MemoryManagement.FlushMemory();
         }
 
         private void lstButton_MouseHover(object sender, EventArgs e)
         {
-            TooltipShow("Click here to open last Screenshot.", lstButton);
+            TooltipShow(cc_lang[49], lstButton);
             MemoryManagement.FlushMemory();
         }
 
         private void consButton_MouseHover(object sender, EventArgs e)
         {
-            TooltipShow("Click here to Toogle Console of ScreenShotter.", consButton);
+            TooltipShow(cc_lang[50], consButton);
             MemoryManagement.FlushMemory();
         }
 
         private void confButton_MouseHover(object sender, EventArgs e)
         {
-            TooltipShow("Click here to Open Configs window.", confButton);
+            TooltipShow(cc_lang[51], confButton);
             MemoryManagement.FlushMemory();
         }
 
         private void pathLabel_MouseHover(object sender, EventArgs e)
         {
-            TooltipShow("This show current path for saving screenshots.\nPath:" + mus.path, pathLabel);
+            if (mus.path == "")
+            {
+                TooltipShow(cc_lang[52] + " " + cc_lang[33], pathLabel);
+            }
+            else
+            {
+                TooltipShow(cc_lang[52] + mus.path, pathLabel);
+            }
             MemoryManagement.FlushMemory();
         }
         #endregion

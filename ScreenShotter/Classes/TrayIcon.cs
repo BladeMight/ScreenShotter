@@ -14,22 +14,31 @@ namespace ScreenShotter
         public event EventHandler<EventArgs> ConfigsClick;
         private NotifyIcon Trycon;
         private ContextMenu Connu;
+        public MenuItem ConfigMI,ShowHideMI,AboutMI,ExitMI;
 
         public TrayIcon(bool? visible = true)
         {
             Trycon = new NotifyIcon();
             Connu = new ContextMenu();
-            Connu.MenuItems.Add("Configs", ConfigsClickHandler);
-            Connu.MenuItems.Add("Show/Hide", ShowClickHandler);
-            Connu.MenuItems.Add("About", AboutClickHandler);
-            Connu.MenuItems.Add("Exit", ExitClickHandler);
-            Trycon.Text = "Screenshooter";
+            RefreshMenu();
+            Trycon.Text = "Screenshooter\nLast screenshot:"+ScreenShotter.mus.LastPath;
             Trycon.Icon = Properties.Resources.ScreenShotter;
             Trycon.Visible = visible == true;
             Trycon.ContextMenu = Connu;
             Trycon.MouseDoubleClick += DoubleClickHandler;
             }
-
+        public void RefreshMenu()
+        {
+            Connu.MenuItems.Clear();
+            ConfigMI = new MenuItem(ScreenShotter.cc_lang[59], ConfigsClickHandler);
+            ShowHideMI = new MenuItem(ScreenShotter.cc_lang[60], ShowClickHandler);
+            AboutMI = new MenuItem(ScreenShotter.cc_lang[61], AboutClickHandler);
+            ExitMI = new MenuItem(ScreenShotter.cc_lang[62], ExitClickHandler);
+            Connu.MenuItems.Add(ConfigMI);
+            Connu.MenuItems.Add(ShowHideMI);
+            Connu.MenuItems.Add(AboutMI);
+            Connu.MenuItems.Add(ExitMI);
+        }
         private void ConfigsClickHandler(object sender, EventArgs e)
         {
             if (ConfigsClick != null)
@@ -67,7 +76,7 @@ namespace ScreenShotter
                 ShowClick(this, null);
             }
         }
-        void DoubleClickHandler(object sender, MouseEventArgs e)
+        private void DoubleClickHandler(object sender, MouseEventArgs e)
         {
             if (DoubleClick != null)
             {

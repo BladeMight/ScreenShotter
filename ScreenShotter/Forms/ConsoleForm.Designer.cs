@@ -56,7 +56,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ConsoleForm";
-            this.Text = "ScreenShotter Console";
+            this.Text = "Console";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConsoleForm_FormClosing);
             this.Load += new System.EventHandler(this.ConsoleForm_Shown);
             this.VisibleChanged += new System.EventHandler(this.ConsoleForm_VisibleChanged);

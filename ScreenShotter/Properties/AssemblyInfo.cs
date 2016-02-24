@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Resources;
 
 // Управление общими сведениями о сборке осуществляется с помощью 
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
@@ -10,8 +11,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BladeMight")]
 [assembly: AssemblyProduct("ScreenShootter")]
-[assembly: AssemblyCopyright("Copyright © BladeMight 2015")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyright © BladeMight 2016")]
+[assembly: AssemblyTrademark("BM")]
 [assembly: AssemblyCulture("")]
 
 // Параметр ComVisible со значением FALSE делает типы в сборке невидимыми 
@@ -32,5 +33,6 @@ using System.Runtime.InteropServices;
 // Можно задать все значения или принять номер построения и номер редакции по умолчанию, 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.6.9")]
-[assembly: AssemblyFileVersion("0.6.9.0")]
+[assembly: AssemblyVersion("0.7.5.0")]
+[assembly: AssemblyFileVersion("0.7.5.0")]
+[assembly: NeutralResourcesLanguageAttribute("")]
