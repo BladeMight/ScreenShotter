@@ -4,8 +4,8 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Media;
 using System.IO;
-using System.Linq;
 using System.Threading;
+using System.Linq;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using Classes;
@@ -317,7 +317,7 @@ namespace ScreenShotter
         }
         protected override void WndProc(ref Message m)
         {
-            string HotkeyCatchLog = cc_lang[26] + (((int)m.LParam >> 16) & 0xFFFF) + cc_lang[27] + ((int)m.LParam & 0xFFFF);
+            string HotkeyCatchLog = cc_lang[26] + (((int)m.LParam >> 16) & 0xFFFF) + " " + cc_lang[27] + ((int)m.LParam & 0xFFFF);
             if (m.Msg == Modifiers.WM_HOTKEY_MSG_ID)
                 if ((Keys)(((int)m.LParam >> 16) & 0xFFFF) == Keys.F3 && ((int)m.LParam & 0xFFFF) == Modifiers.ALT)
                 {
