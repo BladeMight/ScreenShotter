@@ -160,6 +160,7 @@
             this.Info.Size = new System.Drawing.Size(19, 17);
             this.Info.TabIndex = 9;
             this.Info.Text = "s";
+            this.Info.Click += new System.EventHandler(this.Info_Click);
             this.Info.MouseHover += new System.EventHandler(this.Info_MouseHover);
             // 
             // ScreenShotter

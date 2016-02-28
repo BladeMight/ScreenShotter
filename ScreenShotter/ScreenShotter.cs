@@ -32,7 +32,12 @@ namespace ScreenShotter
         {
             if (mus.lang == "")
             {
-                mus.lang = "en";
+                mus.lang ="en";
+            }
+            var syslang = System.Globalization.CultureInfo.CurrentCulture;
+            if (Convert.ToString(syslang) == "ru-RU")
+            {
+                mus.lang = "ru";
             }
             check.Tick += new EventHandler(checkis);
             check.Interval = 50;
@@ -58,6 +63,15 @@ namespace ScreenShotter
             SelScrShot.Register();
             InitializeTrayIcon();
             About = new AboutBox();
+            if (mus.firstrun && mus.TrayShow == false)
+            {
+                mus.TrayShow = true;
+            }
+            if (mus.firstrun)
+            {
+                icon.ShowTooltip(cc_lang[68], cc_lang[69]);
+                mus.firstrun = false;
+            }
             MemoryManagement.FlushMemory();
         }
         #region Functions
@@ -76,15 +90,24 @@ namespace ScreenShotter
                 cc_lang = Translations.lang_en;
             }
         }
-        void checkis(object sender, EventArgs e)
+        public static string ifru(string ending)
+        {
+            string ifru = "";
+            if (mus.lang == "ru")
+            { ifru = ending;
+            return ifru;
+            }
+            return ifru;
+        }
+        public void checkis(object sender, EventArgs e)
         {
             if (ScreenShotter.mus.TrayShow == true)
             {
-                ttButton.Text = ScreenShotter.cc_lang[8] + " " + ScreenShotter.cc_lang[0];
+                ttButton.Text = ScreenShotter.cc_lang[8] + " " + ScreenShotter.cc_lang[0] + ifru("а");
             }
             else
             {
-                ttButton.Text = ScreenShotter.cc_lang[8] + " " + ScreenShotter.cc_lang[1];
+                ttButton.Text = ScreenShotter.cc_lang[8] + " " + ScreenShotter.cc_lang[1] + ifru("а");
             }
             spButton.Text = cc_lang[31];
             lstButton.Text = cc_lang[32];
@@ -101,12 +124,12 @@ namespace ScreenShotter
             About.RefreshAll();
             check.Stop();
         }
-        void InitializeTrayIcon()
+        private void InitializeTrayIcon()
         {
             icon = new TrayIcon(mus.TrayShow);
             icon.ShowClick += icon_DoubleClick;
             icon.ExitClick += icon_ExitClick;
-            icon.DoubleClick += icon_DoubleClick;
+            icon.Click += icon_DoubleClick;
             icon.AboutClick += icon_AboutClick;
             icon.ConfigsClick += confButton_Click;
             cwl( cc_lang[8] +" " + cc_lang[10]);
@@ -141,7 +164,7 @@ namespace ScreenShotter
                 }
                 MainWindowHide();
             }
-            else { if (cwsw == true) { cws = true; console.Show(); } MainWindowShow(); }
+            else { if (cwsw == true) { cws = true; console.Show(); } MainWindowShow(); this.Activate(); }
             MemoryManagement.FlushMemory();
         }
         private void ReferenceVisibility()
@@ -165,13 +188,22 @@ namespace ScreenShotter
         private void SSConsoleHide()
         {
             console.Hide();
-            cwl(cc_lang[5] + " " + cc_lang[1]);
+            cwl(cc_lang[5] + " " + cc_lang[1] + ifru("а"));
             MemoryManagement.FlushMemory();
         }
         private void SSConsoleShow()
         {
             console.Show();
-            cwl(cc_lang[5] + " " + cc_lang[0]);
+            cwl(cc_lang[5] + " " + cc_lang[0] + ifru("а"));
+            MemoryManagement.FlushMemory();
+        }
+        private void ShowHideAbout()
+        {
+            if (About.Visible == true)
+            {
+                About.Hide();
+            }
+            else { About.ShowDialog(); }
             MemoryManagement.FlushMemory();
         }
         private void MainWindowShow()
@@ -180,13 +212,13 @@ namespace ScreenShotter
             TopMost = true;
             Thread.Sleep(1);
             TopMost = false;
-            cwl(cc_lang[6] + " " + cc_lang[0]);
+            cwl(cc_lang[6] + " " + cc_lang[0] + ifru("о"));
             MemoryManagement.FlushMemory();
         }
         private void MainWindowHide()
         {
             Hide();
-            cwl(cc_lang[6] + " " + cc_lang[1]);
+            cwl(cc_lang[6] + " " + cc_lang[1] + ifru("о"));
             MemoryManagement.FlushMemory();
         }
         private void checkFileExist()
@@ -401,11 +433,17 @@ namespace ScreenShotter
                 mus.TrayShow = false;
                 icon.Hide();
                 Refresh();
-                cwl(cc_lang[8] + " " + cc_lang[1]);
-                ttButton.Text = cc_lang[8] + " " + cc_lang[1];
+                cwl(cc_lang[8] + " " + cc_lang[1] + ifru("а"));
+                ttButton.Text = cc_lang[8] + " " + cc_lang[1] + ifru("а");
                 ApplySave();
             }
-            else { mus.TrayShow = true; icon.Show(); Refresh(); cwl(cc_lang[8] + " " + cc_lang[0]); ApplySave(); ttButton.Text = cc_lang[8] + " " + cc_lang[0]; }
+            else 
+            {
+                mus.TrayShow = true;
+                icon.Show();
+                Refresh();
+                cwl(cc_lang[8] + " " + cc_lang[0] + ifru("а")); ApplySave(); ttButton.Text = cc_lang[8] + " " + cc_lang[0] + ifru("а");
+            }
         }
         private void consButton_Click(object sender, EventArgs e)
         {
@@ -427,14 +465,14 @@ namespace ScreenShotter
         {
             if (configs.Visible == false)
             {
-                cwl( cc_lang[7] +" "+  cc_lang[0]);
+                cwl(cc_lang[7] + " " + cc_lang[0] + ifru("о"));
                 if (configs.ShowDialog() == DialogResult.OK)
                 {
                     configs.Apply();
                     cwl(cc_lang[4] + " " + cc_lang[2]+", Tooltips=" + mus.Tooltips + ", ConsoleButton=" + mus.ConsoleButton + ", TrayToogleButton=" + mus.TrayButton + ", Exit on Close =" + mus.ExitOnX + ", Format=" + Convert.ToString(mus.siFormat) + ", Language = " + mus.lang);
                     ReferenceVisibility();
                 }
-                else { cwl( cc_lang[4] + " " +  cc_lang[3]); }
+                else { cwl(cc_lang[4] + " " + cc_lang[3]); }
             }
             else { configs.Activate(); cwl(cc_lang[24]); }
             MemoryManagement.FlushMemory();
@@ -451,12 +489,7 @@ namespace ScreenShotter
         }
         private void icon_AboutClick(object sender, EventArgs e)
         {
-            if (About.Visible == true)
-            {
-                About.Hide();
-            }
-            else { About.Show(); }
-            MemoryManagement.FlushMemory();
+            ShowHideAbout();
         }
         private void icon_ExitClick(object sender, EventArgs e)
         {
@@ -477,9 +510,9 @@ namespace ScreenShotter
             cwl( cc_lang[18]);
             if (mus.TrayShow == true)
             {
-                ttButton.Text = cc_lang[8] + " " + cc_lang[0];
+                ttButton.Text = cc_lang[8] + " " + cc_lang[0] + ifru("а");
             }
-            else { ttButton.Text = cc_lang[8] + " " + cc_lang[1]; }
+            else { ttButton.Text = cc_lang[8] + " " + cc_lang[1] + ifru("а"); }
             if (mus.LastPath == "")
             {
                 lstButton.Visible = false;
@@ -580,6 +613,11 @@ namespace ScreenShotter
             MemoryManagement.FlushMemory();
         }
         #endregion
+
+        private void Info_Click(object sender, EventArgs e)
+        {
+            ShowHideAbout();
+        }
 
     }
 }

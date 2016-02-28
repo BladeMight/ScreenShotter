@@ -85,4 +85,12 @@ public class Settings : ApplicationSettingsBase
         get { return (string)this["lang"]; }
         set { this["lang"] = (string)value; }
     }
+    [UserScopedSetting()]
+    [global::System.Configuration.SettingsProviderAttribute(typeof(PortableSettingsProvider))]
+    [DefaultSettingValue("true")]
+    public bool firstrun
+    {
+        get { return (bool)this["firstrun"]; }
+        set { this["firstrun"] = (bool)value; }
+    }
 }

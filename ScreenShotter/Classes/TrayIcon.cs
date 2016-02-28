@@ -9,13 +9,12 @@ namespace ScreenShotter
     {
         public event EventHandler<EventArgs> ExitClick;
         public event EventHandler<EventArgs> ShowClick;
-        public event EventHandler<EventArgs> DoubleClick;
+        public event EventHandler<EventArgs> Click;
         public event EventHandler<EventArgs> AboutClick;
         public event EventHandler<EventArgs> ConfigsClick;
         private NotifyIcon Trycon;
         private ContextMenu Connu;
         public MenuItem ConfigMI,ShowHideMI,AboutMI,ExitMI;
-
         public TrayIcon(bool? visible = true)
         {
             Trycon = new NotifyIcon();
@@ -26,7 +25,16 @@ namespace ScreenShotter
             Trycon.Visible = visible == true;
             Trycon.ContextMenu = Connu;
             Trycon.MouseDoubleClick += DoubleClickHandler;
+            Trycon.BalloonTipClicked += ClickHandler;
             }
+
+        private void ClickHandler(object sender, EventArgs e)
+        {
+            if (Click != null)
+            {
+                Click(this, null);
+            }
+        }
         public void RefreshMenu()
         {
             Connu.MenuItems.Clear();
@@ -45,6 +53,10 @@ namespace ScreenShotter
             {
                 ConfigsClick(this, null);
             }
+        }
+        public void ShowTooltip(string a, string b)
+        {
+            Trycon.ShowBalloonTip(1000, a, b, ToolTipIcon.Info);
         }
         public void Show()
         {
@@ -78,9 +90,9 @@ namespace ScreenShotter
         }
         private void DoubleClickHandler(object sender, MouseEventArgs e)
         {
-            if (DoubleClick != null)
+            if (Click != null)
             {
-                DoubleClick(this, null);
+                Click(this, null);
             }
         }
     }

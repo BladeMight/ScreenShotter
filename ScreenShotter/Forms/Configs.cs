@@ -109,7 +109,7 @@ namespace ScreenShotter
                 ScreenShotter.check.Start();
             }
             onopen = true;
-            ScreenShotter.console.Write(ScreenShotter.cc_lang[7] + " " + ScreenShotter.cc_lang[25]);
+            ScreenShotter.console.Write(ScreenShotter.cc_lang[7] + " " + ScreenShotter.cc_lang[25] + ScreenShotter.ifru("о"));
         }
         public void InstantLangChange()
         {
