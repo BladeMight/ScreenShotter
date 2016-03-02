@@ -266,7 +266,7 @@ namespace ScreenShotter
             string name = now.ToString("yyyy-MM-dd,hh-mm-ss");
             string dateString = string.Format(@"{0}{1}", mus.path, name + "." + GETextension());
             cwl(cc_lang[20] + name);
-            SasLabel.Text = cc_lang[21] +":" + Environment.NewLine + dateString;
+            SasLabel.Text = cc_lang[11]+ cc_lang[21] + ":" + Environment.NewLine + dateString;
             saveImage(dateString, ScSh, mus.siFormat, mus.jpgQuality);
             pictureBox1.Image = ScSh;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -305,7 +305,7 @@ namespace ScreenShotter
                     string name = now.ToString("yyyy-MM-dd,hh-mm-ss") + "-Selection";
                     string dateString = string.Format(@"{0}{1}", mus.path, name + "." + GETextension());
                     cwl(cc_lang[20] + name);
-                    SasLabel.Text = "Last Screenshot Saved as:" + Environment.NewLine + dateString;
+                    SasLabel.Text = cc_lang[11] + cc_lang[21] + ":" + Environment.NewLine + dateString;
                     saveImage(dateString,ScSh,mus.siFormat,mus.jpgQuality);
                     pictureBox1.Image = ScSh;
                     pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -333,7 +333,7 @@ namespace ScreenShotter
             string name = now.ToString("yyyy-MM-dd,hh-mm-ss") + "-Window";
             string dateString = string.Format(@"{0}{1}", mus.path, name + "." + GETextension());
             cwl(cc_lang[20] + name);
-            SasLabel.Text = "Last Screenshot Saved as:" + Environment.NewLine + dateString;
+            SasLabel.Text = cc_lang[11] + cc_lang[21] + ":" + Environment.NewLine + dateString;
             saveImage(dateString, ScSh, mus.siFormat, mus.jpgQuality);
             pictureBox1.Image = ScSh;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
