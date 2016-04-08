@@ -1,7 +1,7 @@
 # English
 ## ScreenShotter
-![ScreenShotter's logo](https://4.bp.blogspot.com/-SFQ5MdqLRZY/Vwen06qwlcI/AAAAAAAAAcY/ao2q4BQUoVgoTjMtKiYwrFazOses1XWfQ/s1600/ScreenShotter.png)
-Tool that makes it easy to take screenshots.
+![ScreenShotter's logo](https://4.bp.blogspot.com/-SFQ5MdqLRZY/Vwen06qwlcI/AAAAAAAAAcY/ao2q4BQUoVgoTjMtKiYwrFazOses1XWfQ/s1600/ScreenShotter.png)<br>
+_Tool that makes it easy to take screenshots._
 ### Hotkeys
 * **ALT + F3** to make screenshot of all screen.
 * **CTRL + F3** to make screenshot of active window.
