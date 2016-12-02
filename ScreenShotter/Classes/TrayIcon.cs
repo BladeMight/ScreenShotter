@@ -20,7 +20,6 @@ namespace ScreenShotter
             Trycon = new NotifyIcon();
             Connu = new ContextMenu();
             RefreshMenu();
-            Trycon.Text = "Screenshooter\nLast screenshot:"+ScreenShotter.mus.LastPath;
             Trycon.Icon = Properties.Resources.ScreenShotter;
             Trycon.Visible = visible == true;
             Trycon.ContextMenu = Connu;
@@ -37,6 +36,10 @@ namespace ScreenShotter
         }
         public void RefreshMenu()
         {
+            var whole = "Screenshooter\n"+ScreenShotter.cc_lang[11]+ScreenShotter.muc.Read("Main","LastPath");
+            string clipped = "";
+            try{ clipped = whole.Substring(0,63);} catch {clipped = whole;}
+            Trycon.Text = clipped;
             Connu.MenuItems.Clear();
             ConfigMI = new MenuItem(ScreenShotter.cc_lang[59], ConfigsClickHandler);
             ShowHideMI = new MenuItem(ScreenShotter.cc_lang[60], ShowClickHandler);

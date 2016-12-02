@@ -90,6 +90,7 @@
             // ttButton
             // 
             this.ttButton.BackColor = System.Drawing.Color.Transparent;
+            this.ttButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.ttButton.FlatAppearance.BorderSize = 0;
             this.ttButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.ttButton.Location = new System.Drawing.Point(25, 42);

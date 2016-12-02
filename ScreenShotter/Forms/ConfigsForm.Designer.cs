@@ -1,6 +1,6 @@
 ﻿namespace ScreenShotter
 {
-    partial class Configs
+    partial class ConfigsForm
     {
         /// <summary>
         /// Required designer variable.

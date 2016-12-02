@@ -1,13 +1,13 @@
 # English
 ## ScreenShotter
-![ScreenShotter's logo](https://4.bp.blogspot.com/-SFQ5MdqLRZY/Vwen06qwlcI/AAAAAAAAAcY/ao2q4BQUoVgoTjMtKiYwrFazOses1XWfQ/s1600/ScreenShotter.png)<br>
+![ScreenShotter's logo](https://4.bp.blogspot.com/-SFQ5MdqLRZY/Vwen06qwlcI/AAAAAAAAAcY/ao2q4BQUoVgoTjMtKiYwrFazOses1XWfQ/s1600/ScreenShotter.png)<br/>
 _Tool that makes it easy to take screenshots._
 ### Hotkeys
-* **ALT + F3** to make screenshot of all screen.
-* **CTRL + F3** to make screenshot of active window.
-* **CTRL + SHIFT + F3** to make selection screenshot.
-* **CTRL + ALT + F3** to toogle main window visibility.
-* **CTRL + WIN + ALT + F4** Immediately shutdow.
+- **ALT + F3** to make screenshot of all screen.
+- **CTRL + F3** to make screenshot of active window.
+- **CTRL + SHIFT + F3** to make selection screenshot.
+- **CTRL + ALT + F3** to toogle main window visibility.
+- **CTRL + WIN + ALT + F4** Immediately shutdow.
 
 ### Features
 1. Can save screenshots instantly, no more need to "push PrtSc, open paint, paste, then save..."

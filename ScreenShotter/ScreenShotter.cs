@@ -17,9 +17,9 @@ namespace ScreenShotter
         public static bool cws = false, cwsw = false, force = false, ssws = false, cancelled = false;
         public static Bitmap ScSh = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
         public FolderBrowserDialog Selpath;
-        public static Settings mus = new Settings();
+        public static Configs muc = new Configs();
         private HotkeyHandler ScrShHK, ScrShshhHK, ScrShExit, Oplast, SelScrShot, curWindowSS;
-        private Configs configs = new Configs();
+        private ConfigsForm configs = new ConfigsForm();
         public static ConsoleForm console = new ConsoleForm();
         private SelectionScreenShot selSCR = new SelectionScreenShot();
         private AboutBox About;
@@ -30,15 +30,22 @@ namespace ScreenShotter
         #endregion
         public ScreenShotter()
         {
-            if (mus.lang == "")
+//            if (muc.Read("Main","lang") == "")
+//            {
+//                muc.Read("Main","lang") ="en";
+//            }
+            if (!File.Exists(Configs.filePath))
             {
-                mus.lang ="en";
+            	muc.Write("Main","TrayShow","true");
+	            var syslang = System.Globalization.CultureInfo.CurrentCulture;
+	            if (Convert.ToString(syslang) == "ru-RU")
+	            {
+	            	muc.Write("Main","lang","ru");
+	            }
+           		langchange();
+                icon.ShowTooltip(cc_lang[68], cc_lang[69]);
             }
-            var syslang = System.Globalization.CultureInfo.CurrentCulture;
-            if (Convert.ToString(syslang) == "ru-RU")
-            {
-                mus.lang = "ru";
-            }
+            langchange();
             check.Tick += new EventHandler(checkis);
             check.Interval = 50;
             check.Start();
@@ -63,37 +70,28 @@ namespace ScreenShotter
             SelScrShot.Register();
             InitializeTrayIcon();
             About = new AboutBox();
-            if (mus.firstrun && mus.TrayShow == false)
-            {
-                mus.TrayShow = true;
-            }
-            if (mus.firstrun)
-            {
-                icon.ShowTooltip(cc_lang[68], cc_lang[69]);
-                mus.firstrun = false;
-            }
             MemoryManagement.FlushMemory();
         }
         #region Functions
         public static void langchange()
         {
-            if (mus.lang == "en")
-            {
-                cc_lang = Translations.lang_en;
-            }
-            if (mus.lang == "ru")
-            {
-                cc_lang = Translations.lang_ru;
-            }
-            else
-            {
-                cc_lang = Translations.lang_en;
-            }
+        	switch(muc.Read("Main","lang"))
+        	{
+        		case "en":
+               		cc_lang = Translations.lang_en;
+        			break;
+        		case "ru":
+        			cc_lang = Translations.lang_ru;
+        			break;
+        		default:
+        			cc_lang = Translations.lang_en;
+        			break;        			
+        	}
         }
         public static string ifru(string ending)
         {
             string ifru = "";
-            if (mus.lang == "ru")
+            if (muc.Read("Main","lang") == "ru")
             { ifru = ending;
             return ifru;
             }
@@ -101,7 +99,7 @@ namespace ScreenShotter
         }
         public void checkis(object sender, EventArgs e)
         {
-            if (ScreenShotter.mus.TrayShow == true)
+            if (muc.ReadBool("Main","TrayShow") == true)
             {
                 ttButton.Text = ScreenShotter.cc_lang[8] + " " + ScreenShotter.cc_lang[0] + ifru("а");
             }
@@ -111,9 +109,9 @@ namespace ScreenShotter
             }
             spButton.Text = cc_lang[31];
             lstButton.Text = cc_lang[32];
-            if (mus.path != "")
+            if (muc.Read("Main","Path") != "")
             {
-                pathLabel.Text = cc_lang[17] + ":" + Environment.NewLine + mus.path;
+                pathLabel.Text = cc_lang[17] + ":" + Environment.NewLine + muc.Read("Main","Path");
             }
             else
             {
@@ -126,7 +124,7 @@ namespace ScreenShotter
         }
         private void InitializeTrayIcon()
         {
-            icon = new TrayIcon(mus.TrayShow);
+        	icon = new TrayIcon(muc.ReadBool("Main","TrayShow"));
             icon.ShowClick += icon_DoubleClick;
             icon.ExitClick += icon_ExitClick;
             icon.Click += icon_DoubleClick;
@@ -140,13 +138,12 @@ namespace ScreenShotter
         }
         private void ApplySave()
         {
-            mus.Save();
             cwl(cc_lang[4] + " " + cc_lang[2]);
             MemoryManagement.FlushMemory();
         }
         private void TooltipShow(string text, IWin32Window window)
         {
-            if (mus.Tooltips == true)
+            if (muc.ReadBool("Main","Tooltips") == true)
             {
                 toolTip.Show(text, window);
             }
@@ -169,16 +166,16 @@ namespace ScreenShotter
         }
         private void ReferenceVisibility()
         {
-            if (mus.ConsoleButton == true)
+            if (muc.ReadBool("Main","ConsoleButton") == true)
             {
                 consButton.Visible = true;
 
             }else { consButton.Visible = false; }
-            if (mus.TrayButton == true)
+            if (muc.ReadBool("Main","TrayButton") == true)
             {
                 ttButton.Visible = true;
             }else { ttButton.Visible = false; }
-            if (mus.Tooltips == true)
+            if (muc.ReadBool("Main","Tooltips") == true)
             {
                 Info.Visible = true;
             }
@@ -223,35 +220,26 @@ namespace ScreenShotter
         }
         private void checkFileExist()
         {
-            if (!File.Exists(@mus.LastPath) && mus.LastPath !="")
+            if (!File.Exists(@muc.Read("Main","LastPath")) && muc.Read("Main","LastPath") !="")
             {
-                cwl(cc_lang[11] +"(" + mus.LastPath + ")" + cc_lang[12]);
+                cwl(cc_lang[11] +"(" + muc.Read("Main","LastPath") + ")" + cc_lang[12]);
                 pictureBox1.Image = null;
                 lstButton.Visible = false;
                 SasLabel.Text = "";
-                mus.LastPath = "";
+                muc.Write("Main","LastPath","");
             }
         }
-        private void saveImage(string path, Bitmap image, ImageFormat format, long ifjpgQuality)
+        private void saveImage(string path, Bitmap image, string format, long ifjpgQuality)
         {
-            if (format == ImageFormat.Jpeg)
+            if ((ImageFormat)new ImageFormatConverter().ConvertFromString(format) == ImageFormat.Jpeg)
             {
                 var enc = ImageCodecInfo.GetImageEncoders().First(c => c.FormatID == ImageFormat.Jpeg.Guid);
                 var encQ = new EncoderParameters() { Param = new[] { new EncoderParameter(Encoder.Quality, ifjpgQuality) } };
                 image.Save(path, enc, encQ);
             }else
             {
-                image.Save(path, format);
+            	image.Save(path, (ImageFormat)new ImageFormatConverter().ConvertFromString(format));
             }
-        }
-        private string GETextension()
-        {
-            string ext = Convert.ToString(mus.siFormat).ToLower();
-            if (ext == "jpeg")
-            {
-                return "jpg";
-            }
-            return ext;
         }
         #endregion
         #region Hotkey Handlers & WNDPROC
@@ -264,15 +252,15 @@ namespace ScreenShotter
             sound.Play();
             DateTime now = DateTime.Now;
             string name = now.ToString("yyyy-MM-dd,hh-mm-ss");
-            string dateString = string.Format(@"{0}{1}", mus.path, name + "." + GETextension());
+            string dateString = string.Format(@"{0}{1}", muc.Read("Main","Path"), name + "." + muc.Read("Main","Format"));
             cwl(cc_lang[20] + name);
             SasLabel.Text = cc_lang[11]+ cc_lang[21] + ":" + Environment.NewLine + dateString;
-            saveImage(dateString, ScSh, mus.siFormat, mus.jpgQuality);
+            saveImage(dateString, ScSh, muc.Read("Main","Format"), muc.ReadInt("Main","jpgQuality"));
             pictureBox1.Image = ScSh;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             cwl(cc_lang[11] + cc_lang[21] + " " + dateString);
             cwl(cc_lang[16]);
-            mus.LastPath = dateString;
+            muc.Write("Main", "LastPath",dateString);
             if (lstButton.Visible == false)
             {
                 cwl(cc_lang[22]);
@@ -303,15 +291,15 @@ namespace ScreenShotter
                     sound.Play();
                     DateTime now = DateTime.Now;
                     string name = now.ToString("yyyy-MM-dd,hh-mm-ss") + "-Selection";
-                    string dateString = string.Format(@"{0}{1}", mus.path, name + "." + GETextension());
+                    string dateString = string.Format(@"{0}{1}", muc.Read("Main","Path"), name + "." +  muc.Read("Main","Format"));
                     cwl(cc_lang[20] + name);
                     SasLabel.Text = cc_lang[11] + cc_lang[21] + ":" + Environment.NewLine + dateString;
-                    saveImage(dateString,ScSh,mus.siFormat,mus.jpgQuality);
+                    saveImage(dateString,ScSh, muc.Read("Main","Format"), muc.ReadInt("Main","jpgQuality"));
                     pictureBox1.Image = ScSh;
                     pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                     cwl(cc_lang[11] + cc_lang[21] + " " + dateString);
                     cwl(cc_lang[16]);
-                    mus.LastPath = dateString;
+                    muc.Write("Main", "LastPath",dateString);
                     if (lstButton.Visible == false)
                     {
                         cwl(cc_lang[22]);
@@ -331,15 +319,15 @@ namespace ScreenShotter
             sound.Play();
             DateTime now = DateTime.Now;
             string name = now.ToString("yyyy-MM-dd,hh-mm-ss") + "-Window";
-            string dateString = string.Format(@"{0}{1}", mus.path, name + "." + GETextension());
+            string dateString = string.Format(@"{0}{1}", muc.Read("Main","Path"), name + "." +  muc.Read("Main","Format"));
             cwl(cc_lang[20] + name);
             SasLabel.Text = cc_lang[11] + cc_lang[21] + ":" + Environment.NewLine + dateString;
-            saveImage(dateString, ScSh, mus.siFormat, mus.jpgQuality);
+            saveImage(dateString, ScSh, muc.Read("Main","Format"), muc.ReadInt("Main","jpgQuality"));
             pictureBox1.Image = ScSh;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             cwl(cc_lang[11] + cc_lang[21] + " " + dateString);
             cwl(cc_lang[16]);
-            mus.LastPath = dateString;
+            muc.Write("Main", "LastPath",dateString);
             if (lstButton.Visible == false)
             {
                 cwl(cc_lang[22]);
@@ -369,18 +357,18 @@ namespace ScreenShotter
                 else if ((Keys)(((int)m.LParam >> 16) & 0xFFFF) == Keys.F3 && ((int)m.LParam & 0xFFFF) == Modifiers.ALT + Modifiers.SHIFT)
                 {
                     cwl(HotkeyCatchLog);
-                    if (File.Exists(@mus.LastPath) && mus.LastPath != "")
+                    if (File.Exists(@muc.Read("Main","LastPath")) && muc.Read("Main","LastPath") != "")
                     {
-                        Process.Start(@mus.LastPath);
+                        Process.Start(@muc.Read("Main","LastPath"));
                     }
                     else 
                     {
-                        MessageBox.Show(cc_lang[11]+"("+mus.LastPath+")"+cc_lang[12], cc_lang[30], MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        cwl(cc_lang[11] + "(" + mus.LastPath + ")" + cc_lang[12]);                  
+                        MessageBox.Show(cc_lang[11]+"("+muc.Read("Main","LastPath")+")"+cc_lang[12], cc_lang[30], MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        cwl(cc_lang[11] + "(" + muc.Read("Main","LastPath") + ")" + cc_lang[12]);                  
                         pictureBox1.Image = null;
                         lstButton.Visible = false;
                         SasLabel.Text = "";
-                        mus.LastPath = "";
+                        muc.Write("Main","LastPath","");
                     }
                     MemoryManagement.FlushMemory();
                 }
@@ -417,10 +405,10 @@ namespace ScreenShotter
             DialogResult result = Selpath.ShowDialog();
             if (result == DialogResult.OK)
             {
-                mus.path = Selpath.SelectedPath + "\\";
-                cwl(cc_lang[15] + mus.path);
+            	muc.Write("Main","Path",Selpath.SelectedPath + "\\");
+                cwl(cc_lang[15] + muc.Read("Main","Path"));
                 ApplySave();
-                pathLabel.Text = cc_lang[17]+": " + Environment.NewLine + mus.path;
+                pathLabel.Text = cc_lang[17]+": " + Environment.NewLine + muc.Read("Main","Path");
                 cwl(cc_lang[18]);
             }
             else { cwl(cc_lang[19]); }
@@ -428,9 +416,9 @@ namespace ScreenShotter
         }
         private void ttButton_Click(object sender, EventArgs e)
         {
-            if (mus.TrayShow == true)
+            if (muc.ReadBool("Main","TrayShow") == true)
             {
-                mus.TrayShow = false;
+            	muc.Write("Main","Tooltips","false");
                 icon.Hide();
                 Refresh();
                 cwl(cc_lang[8] + " " + cc_lang[1] + ifru("а"));
@@ -439,7 +427,7 @@ namespace ScreenShotter
             }
             else 
             {
-                mus.TrayShow = true;
+            	muc.Write("Main", "TrayShow","true");
                 icon.Show();
                 Refresh();
                 cwl(cc_lang[8] + " " + cc_lang[0] + ifru("а")); ApplySave(); ttButton.Text = cc_lang[8] + " " + cc_lang[0] + ifru("а");
@@ -469,7 +457,7 @@ namespace ScreenShotter
                 if (configs.ShowDialog() == DialogResult.OK)
                 {
                     configs.Apply();
-                    cwl(cc_lang[4] + " " + cc_lang[2]+", Tooltips=" + mus.Tooltips + ", ConsoleButton=" + mus.ConsoleButton + ", TrayToogleButton=" + mus.TrayButton + ", Exit on Close =" + mus.ExitOnX + ", Format=" + Convert.ToString(mus.siFormat) + ", Language = " + mus.lang);
+                    cwl(cc_lang[4] + " " + cc_lang[2]+", Tooltips=" + muc.ReadBool("Main","Tooltips") + ", ConsoleButton=" + muc.ReadBool("Main","ConsoleButton") + ", TrayToogleButton=" + muc.ReadBool("Main","TrayButton") + ", Exit on Close =" + muc.ReadBool("Main","ExitOnX") + ", Format=" + Convert.ToString(muc.Read("Main","Format")) + ", Language = " + muc.Read("Main","lang"));
                     ReferenceVisibility();
                 }
                 else { cwl(cc_lang[4] + " " + cc_lang[3]); }
@@ -479,7 +467,7 @@ namespace ScreenShotter
         }
         private void lstButton_Click(object sender, EventArgs e)
         {
-            Process.Start(@mus.LastPath);
+            Process.Start(@muc.Read("Main","LastPath"));
             MemoryManagement.FlushMemory();
         }
 
@@ -499,33 +487,33 @@ namespace ScreenShotter
         #region MainForm Events
         private void ScreenShotterMain_Load(object sender, EventArgs e)
         {
-            if (mus.path != "")
+            if (muc.Read("Main","Path") != "")
             {
-                pathLabel.Text = cc_lang[17] + ":" + Environment.NewLine + mus.path;
+                pathLabel.Text = cc_lang[17] + ":" + Environment.NewLine + muc.Read("Main","Path");
             }
             else
             {
                 pathLabel.Text = cc_lang[17] + ":" + Environment.NewLine + cc_lang[33];
             }
             cwl( cc_lang[18]);
-            if (mus.TrayShow == true)
+            if (muc.ReadBool("Main","TrayShow") == true)
             {
                 ttButton.Text = cc_lang[8] + " " + cc_lang[0] + ifru("а");
             }
             else { ttButton.Text = cc_lang[8] + " " + cc_lang[1] + ifru("а"); }
-            if (mus.LastPath == "")
+            if (muc.Read("Main","LastPath") == "")
             {
                 lstButton.Visible = false;
             }
             else
             {
-                if (File.Exists(mus.LastPath))
+                if (File.Exists(muc.Read("Main","LastPath")))
                 {
-                    SasLabel.Text = cc_lang[11] + cc_lang[21] + ":" + Environment.NewLine + mus.LastPath;
-                    pictureBox1.Image = Image.FromFile(@mus.LastPath);
+                    SasLabel.Text = cc_lang[11] + cc_lang[21] + ":" + Environment.NewLine + muc.Read("Main","LastPath");
+                    pictureBox1.Image = Image.FromFile(@muc.Read("Main","LastPath"));
                     pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
                 }
-                else { lstButton.Visible = false; cwl(cc_lang[11] + "(" + mus.LastPath + ")" + cc_lang[12]); }
+                else { lstButton.Visible = false; cwl(cc_lang[11] + "(" + muc.Read("Main","LastPath") + ")" + cc_lang[12]); }
             }
             ReferenceVisibility();
             }
@@ -537,7 +525,7 @@ namespace ScreenShotter
             }
             else
             {
-                if (mus.ExitOnX == true)
+                if (muc.ReadBool("Main","ExitOnX") == true)
                 {
                     ExitHandler();
                 }
@@ -602,13 +590,13 @@ namespace ScreenShotter
 
         private void pathLabel_MouseHover(object sender, EventArgs e)
         {
-            if (mus.path == "")
+            if (muc.Read("Main","Path") == "")
             {
                 TooltipShow(cc_lang[52] + " " + cc_lang[33], pathLabel);
             }
             else
             {
-                TooltipShow(cc_lang[52] + mus.path, pathLabel);
+                TooltipShow(cc_lang[52] + muc.Read("Main","Path"), pathLabel);
             }
             MemoryManagement.FlushMemory();
         }
