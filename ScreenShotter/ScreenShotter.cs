@@ -416,9 +416,9 @@ namespace ScreenShotter
         }
         private void ttButton_Click(object sender, EventArgs e)
         {
-            if (muc.ReadBool("Main","TrayShow") == true)
+            if (muc.ReadBool("Main","TrayShow"))
             {
-            	muc.Write("Main","Tooltips","false");
+            	muc.Write("Main","TrayShow","false");
                 icon.Hide();
                 Refresh();
                 cwl(cc_lang[8] + " " + cc_lang[1] + ifru("а"));
