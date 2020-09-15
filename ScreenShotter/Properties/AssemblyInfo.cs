@@ -12,7 +12,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("BladeMight")]
 [assembly: AssemblyProduct ("ScreenShootter")]
-[assembly: AssemblyCopyright ("© 2016 BladeMight")]
+[assembly: AssemblyCopyright ("© 2020 BladeMight")]
 [assembly: AssemblyTrademark ("BM")]
 [assembly: AssemblyCulture ("")]
 // Параметр ComVisible со значением FALSE делает типы в сборке невидимыми 
@@ -31,7 +31,7 @@ using System.Resources;
 // Можно задать все значения или принять номер построения и номер редакции по умолчанию, 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion ("0.7.9.0")]
-[assembly: AssemblyFileVersion ("0.7.9.0")]
+[assembly: AssemblyVersion ("0.8.0.0")]
+[assembly: AssemblyFileVersion ("0.8.0.0")]
 [assembly: NeutralResourcesLanguageAttribute ("")]
 [assembly: AssemblyDefaultAlias ("BladeMight")]
