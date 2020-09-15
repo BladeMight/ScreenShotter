@@ -34,7 +34,7 @@ namespace Classes
              // this is message box in configs
 /*65-67*/    "I must be a number!\nNumber must be from 0 to 100","Error!",
              // Startup icon tooltip
-/*67-68*/    "Hey!","I'm here, click here!"
+/*68-69*/    "Hey!","I'm here, click here!", "Windows shadow offset (px):"
                                          };
         static public string[] lang_ru = {
              // Это консоли, сообщений и элементов главного окна
@@ -64,7 +64,7 @@ namespace Classes
              // Окно сообщения в меню настроек
 /*65-66*/    "Это должно быть число!\nЧисло должно быть от 0 до 100","Ошибка!",
              // Всплывающая подсказка при первом запуске
-/*67-68*/    "Эй!","Я здесь, щелкни здесь!"
+/*67-69*/    "Эй!","Я здесь, щелкни здесь!", "Отступ от теней на окнах (пикс.):"
                                     };
        
     }

@@ -18,6 +18,10 @@ public class Configs
 		int it = 0;      //int temp
 		bool bt = false; //bool temp
 		//Main section
+		if (!Boolean.TryParse(this.Read("Main", "sound"), out bt))
+			this.Write("Main", "sound", "True");
+		if (!Int32.TryParse(this.Read("Main", "WShadow"), out it))
+			this.Write("Main", "WShadow", "8");
 		if (String.IsNullOrEmpty(this.Read("Main", "Path")))
 			this.Write("Main", "Path", ".\\");
 		if (String.IsNullOrEmpty(this.Read("Main", "Format")))

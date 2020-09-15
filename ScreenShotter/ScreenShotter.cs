@@ -14,7 +14,7 @@ namespace ScreenShotter
     public partial class ScreenShotter : Form
     {
         #region Variables
-        public static bool cws = false, cwsw = false, force = false, ssws = false, cancelled = false;
+        public static bool cws = false, cwsw = false, force = false, ssws = false, cancelled = false, _sound = true;
         public static Bitmap ScSh = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
         public FolderBrowserDialog Selpath;
         public static Configs muc = new Configs();
@@ -70,6 +70,8 @@ namespace ScreenShotter
             SelScrShot.Register();
             InitializeTrayIcon();
             About = new AboutBox();
+            _sound = muc.ReadBool("Main", "sound");
+            CurrentWindowScreenShot.WinShadow = muc.ReadInt("Main", "WShadow");
             MemoryManagement.FlushMemory();
         }
         #region Functions
@@ -249,7 +251,8 @@ namespace ScreenShotter
             SS.CopyFromScreen(0, 0, 0, 0, ScSh.Size);
             cwl(cc_lang[13]);
             cwl(cc_lang[14]);
-            sound.Play();
+            if (_sound)
+            	sound.Play();
             DateTime now = DateTime.Now;
             string name = now.ToString("yyyy-MM-dd,hh-mm-ss");
             string dateString = string.Format(@"{0}{1}", muc.Read("Main","Path"), name + "." + muc.Read("Main","Format"));
@@ -288,7 +291,8 @@ namespace ScreenShotter
                     ScSh = selSCR.selImage;
                     cwl(cc_lang[13]);
                     cwl(cc_lang[14]);
-                    sound.Play();
+                    if (_sound)
+                	    sound.Play();
                     DateTime now = DateTime.Now;
                     string name = now.ToString("yyyy-MM-dd,hh-mm-ss") + "-Selection";
                     string dateString = string.Format(@"{0}{1}", muc.Read("Main","Path"), name + "." +  muc.Read("Main","Format"));
@@ -316,7 +320,8 @@ namespace ScreenShotter
             ScSh = CurrentWindowScreenShot.CaptureCurrentWindow();
             cwl(cc_lang[13]);
             cwl(cc_lang[14]);
-            sound.Play();
+            if (_sound)
+            	sound.Play();
             DateTime now = DateTime.Now;
             string name = now.ToString("yyyy-MM-dd,hh-mm-ss") + "-Window";
             string dateString = string.Format(@"{0}{1}", muc.Read("Main","Path"), name + "." +  muc.Read("Main","Format"));

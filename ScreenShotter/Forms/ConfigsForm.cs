@@ -86,7 +86,12 @@ namespace ScreenShotter
 			ScreenShotter.muc.Write("Main", "Format", format.ToString());
 			ScreenShotter.muc.Write("Main", "jpgQuality", jpgq.ToString());
 			ScreenShotter.muc.Write("Main", "lang", language);
+			ScreenShotter.muc.Write("Main", "WShadow", nud_WShadow.Value.ToString());
+			ScreenShotter.muc.Write("Main", "sound", sound.Checked.ToString());
 			ScreenShotter.langchange();
+			ScreenShotter._sound = sound.Checked = ScreenShotter.muc.ReadBool("Main", "sound");
+			nud_WShadow.Value = ScreenShotter.muc.ReadInt("Main", "WShadow");
+			CurrentWindowScreenShot.WinShadow = (int)nud_WShadow.Value;
 			ScreenShotter.check.Start();
 		}
 		private void cancelButton_Click(object sender, EventArgs e)
@@ -130,6 +135,7 @@ namespace ScreenShotter
 			sfLabel.Text = ScreenShotter.cc_lang[40];
 			cancelButton.Text = ScreenShotter.cc_lang[41];
 			dfltButton.Text = ScreenShotter.cc_lang[42];
+			lbl_WShadow.Text = ScreenShotter.cc_lang[70];
 		}
 		private void Configs_VisibleChanged(object sender, EventArgs e)
 		{
@@ -170,6 +176,9 @@ namespace ScreenShotter
 					comboBox1.SelectedIndex = 3;
 					break;
 			}
+			ScreenShotter._sound = sound.Checked = ScreenShotter.muc.ReadBool("Main", "sound");
+			nud_WShadow.Value = ScreenShotter.muc.ReadInt("Main", "WShadow");
+			CurrentWindowScreenShot.WinShadow = (int)nud_WShadow.Value;
 			jpgQualityBox.Text = Convert.ToString(ScreenShotter.muc.ReadInt("Main", "jpgQuality"));
 			onopen = false;
 		}

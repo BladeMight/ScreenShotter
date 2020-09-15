@@ -28,11 +28,14 @@ namespace ScreenShotter
         {
             return CaptureWindow(GetForegroundWindow());
         }
+        public static int WinShadow = 8; // around 8px shadow
         public static Bitmap CaptureWindow(IntPtr h)
         {
             var rect = new Rect();
+            var sw = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width; // fix blackout
+            var sh = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
             GetWindowRect(h, ref rect);
-            var bounds = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
+            var bounds = new Rectangle(rect.Left+WinShadow, rect.Top, (rect.Right>sw ? sw : rect.Right) - rect.Left-WinShadow*2, (rect.Bottom>sh ? sh : rect.Bottom) - rect.Top-WinShadow);
             var result = new Bitmap(bounds.Width, bounds.Height);
 
             using (var graphics = Graphics.FromImage(result))
